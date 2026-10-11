@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Python с нуля</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f8fa;--tx:#16181d;--mu:#5d6573;--bd:#dfe2e8;--ac:#3b78c4;--y:#ffd43b;--ok:#2a9d5c;--er:#d8453d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#101319;--tx:#e8eaee;--mu:#98a0ad;--bd:#2a2f39}}
+:root[data-theme=dark]{--bg:#101319;--tx:#e8eaee;--mu:#98a0ad;--bd:#2a2f39}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.65 Onest,system-ui,sans-serif}
+[hidden]{display:none!important}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;align-items:center;gap:14px;padding:10px 20px;background:var(--bg);border-bottom:1px solid var(--bd)}
+.lg{font-weight:800;font-size:18px;white-space:nowrap}
+.lg i{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--y);margin-right:10px;box-shadow:0 0 0 3px var(--ac)}
+.pg{flex:1;max-width:360px;height:6px;border-radius:9px;background:var(--bd);overflow:hidden}
+#bar{display:block;height:100%;width:0;background:var(--ac);transition:width .4s}
+#pc{color:var(--mu);font-size:14px;white-space:nowrap}
+#mb{display:none}
+.w{display:grid;grid-template-columns:260px minmax(0,1fr);max-width:1560px;margin:0 auto}
+nav{position:sticky;top:58px;align-self:start;max-height:calc(100vh - 58px);overflow:auto;padding:14px 12px 24px 20px}
+nav h4{margin:18px 0 6px 10px;font-size:13px;color:var(--mu);font-weight:600}
+nav a{display:flex;gap:10px;align-items:center;padding:7px 10px;border-radius:8px;color:inherit;text-decoration:none;font-size:15px}
+nav a:hover,nav a.on{background:var(--bd)}
+nav a.on{font-weight:600}
+nav b{display:grid;place-items:center;flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--bd);font-size:11px}
+nav a.on b{border-color:var(--ac);color:var(--ac)}
+nav a.dn b{background:var(--ok);border-color:var(--ok);color:#fff}
+main{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:36px;padding:28px 28px 48px 16px;align-items:start}
+h1{margin:0 0 10px;font-size:30px;line-height:1.2;font-weight:800}
+#th p{max-width:62ch;margin:0 0 12px}
+code{font:.88em 'JetBrains Mono',ui-monospace,Consolas,monospace;background:var(--bd);padding:2px 6px;border-radius:5px}
+pre{font:13.5px/1.6 'JetBrains Mono',ui-monospace,Consolas,monospace;background:#0e1116;color:#e6e9ef;padding:14px 16px;border-radius:8px;overflow-x:auto;margin:12px 0}
+.tk{margin-top:20px;padding:14px 18px;background:color-mix(in srgb,var(--y) 14%,var(--bg));border-left:4px solid var(--y);border-radius:0 8px 8px 0}
+.tk b{display:block}
+#sp{margin-bottom:8px}
+#sp a{display:inline-grid;place-items:center;width:26px;height:26px;margin-right:6px;border-radius:50%;border:1.5px solid var(--mu);color:inherit;text-decoration:none;font-size:13px}
+#sp a.on{border-color:var(--ac);color:var(--ac);font-weight:600}
+#sp a.dn{background:var(--ok);border-color:var(--ok);color:#fff}
+#sp a.lk{opacity:.4;pointer-events:none}
+.ide{background:#0e1116;color:#e6e9ef;border-radius:12px;overflow:hidden;box-shadow:0 14px 40px -20px #000}
+.bar2{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#181c24;border-bottom:1px solid #262b35}
+.bar2 span{margin-right:auto;color:#8e97a6;font-size:13px}
+button{font:600 14px Onest,system-ui,sans-serif;padding:7px 14px;border-radius:6px;border:1px solid #333a46;background:transparent;color:#e6e9ef;cursor:pointer}
+button:hover{background:#262b35}
+button:disabled{opacity:.45;cursor:default}
+button.p{background:var(--ac);border-color:var(--ac)}
+button.g{background:var(--ok);border-color:var(--ok)}
+.ed{position:relative;background:#0e1116}
+#hl,textarea{margin:0;padding:14px 16px;border:0;border-radius:0;font:14px/1.65 'JetBrains Mono',ui-monospace,Consolas,monospace;tab-size:4;white-space:pre-wrap;overflow-wrap:anywhere}
+#hl{min-height:250px;background:none;color:#e6e9ef;overflow:visible;pointer-events:none}
+textarea{position:absolute;inset:0;width:100%;height:100%;resize:none;overflow:hidden;outline:0;background:transparent;color:transparent;caret-color:#fff}
+textarea::selection{background:#3b78c4aa}
+.ed textarea:focus-visible{outline-offset:-3px}
+pre i{font-style:normal}
+pre .k{color:#c792ea}pre .s{color:#c3e88d}pre .n{color:#f78c6c}pre .c{color:#6f7f93;font-style:italic}pre .b{color:#ffcb6b}pre .f{color:#82aaff}
+#ht{padding:12px 16px;background:#1b1f27;color:#c3c9d4;font-size:14.5px;border-bottom:1px solid #262b35}
+#ht code{background:#2a303b}
+#out{margin:0;border-radius:0;background:#0a0c10;min-height:120px;max-height:300px;overflow:auto;white-space:pre-wrap;font-size:13.5px}
+#out:empty::before{content:'Здесь появится результат программы';color:#6b7482}
+.er{color:#ff8b83}
+.in{background:transparent;border:0;border-bottom:1px solid #58a6ff;color:#79c0ff;font:inherit;outline:0;width:50%}
+#fbw{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 16px;border-top:1px solid #262b35;font-weight:600}
+#fb.ok{color:#4cc380}#fb.bad{color:#ffb454}
+button:focus-visible,textarea:focus-visible,nav a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+@media(max-width:1000px){main{grid-template-columns:1fr;padding:20px 16px 40px}}
+@media(max-width:860px){.w{display:block}#mb{display:block;padding:5px 11px;color:var(--tx);border-color:var(--bd)}nav{display:none;position:fixed;inset:58px 0 64px;z-index:4;background:var(--bg);max-height:none}.m nav{display:block}}
+#tabs{display:flex;gap:4px;margin-left:auto}
+#tabs a{padding:6px 12px;border-radius:8px;color:inherit;text-decoration:none;font-size:14px;font-weight:600;white-space:nowrap}
+#tabs a.on,#tabs a:hover{background:var(--bd)}
+#hr{font-size:17px;white-space:nowrap;letter-spacing:1px}
+.br{display:inline-block;animation:sh .5s}
+@keyframes sh{20%{transform:translateX(-3px) rotate(-12deg)}60%{transform:translateX(3px) rotate(12deg)}}
+@media(prefers-reduced-motion:reduce){.br{animation:none}}
+.pgw{max-width:860px;margin:0 auto;padding:32px 20px 60px}
+.pgw p{max-width:60ch}
+.mu{color:var(--mu);font-size:14px}
+.ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:16px}
+.ac{display:flex;gap:12px;padding:14px 16px;border:1px solid var(--bd);border-radius:10px}
+.ac.lk{opacity:.45;filter:grayscale(1)}
+.ic{font-size:28px;line-height:1}
+.ac small{color:var(--mu)}
+.pr{display:flex;align-items:baseline;gap:10px;margin:18px 0}
+.pr b{font-size:44px;line-height:1}
+.pgw ul{padding-left:20px;margin:0 0 20px}
+.cd{display:flex;gap:8px;margin-top:18px;max-width:380px}
+.cd input{flex:1;min-width:0;padding:8px 12px;border-radius:6px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font:inherit}
+#ps button.p{padding:10px 20px;font-size:15px}
+#ts{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;z-index:9;max-width:90vw;padding:10px 16px;border-radius:10px;background:#181c24;color:#fff;font-weight:600;box-shadow:0 10px 30px -10px #000}
+@media(max-width:860px){#tabs{position:fixed;left:0;right:0;bottom:0;margin:0;justify-content:space-around;background:var(--bg);border-top:1px solid var(--bd);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));z-index:6}#tabs a{font-size:13px;padding:6px 8px}body{padding-bottom:64px}#pc{display:none}.pg{max-width:none}}
+</style>
+</head>
+<body>
+<header><button id="mb" aria-label="Список уроков">☰</button><span class="lg"><i></i>Python с нуля</span><div class="pg"><i id="bar"></i></div><span id="pc"></span><div id="tabs"><a href="#" data-v="l" class="on">📚 Уроки</a><a href="#" data-v="d">🔥 30 дней</a><a href="#" data-v="a">🏆 Награды</a><a href="#" data-v="s">💎 Подписка</a></div><span id="hr"></span></header>
+<div class="w">
+<nav id="nav"></nav>
+<main>
+<section><h1 id="ttl"></h1><div id="th"></div><div class="tk"><div id="sp"></div><b id="tl">Твоя очередь</b><div id="tk"></div></div></section>
+<section class="ide">
+<div class="bar2"><span>main.py</span><button id="rn" class="p" disabled>Запустить</button><button id="ck" class="g" disabled>Проверить</button></div>
+<div class="ed"><pre id="hl" aria-hidden="true"></pre><textarea id="ed" spellcheck="false" autocapitalize="off" autocorrect="off" autocomplete="off" aria-label="Код Python"></textarea></div>
+<div class="bar2"><span>Консоль</span><button id="hb">Подсказка</button><button id="rs">Сбросить код</button></div>
+<div id="ht" hidden></div>
+<pre id="out"></pre>
+<div id="fbw" hidden><span id="fb"></span><button id="nx" class="p" hidden>Следующий урок</button></div>
+</section>
+</main>
+</div>
+<section id="pa" hidden></section><section id="ps" hidden></section><div id="ts" hidden></div>
+<script>
+const $=id=>document.getElementById(id);
+const L=[
+{g:'Основы',t:'Привет, мир!',th:`<p>Программа — это набор команд, которые компьютер выполняет сверху вниз. Команда <code>print()</code> выводит текст на экран. Текст берут в кавычки.</p><pre>print("Привет!")</pre><p>Нажми «Запустить» (или Ctrl+Enter), чтобы увидеть результат.</p>`,k:`Выведи на экран текст <code>Привет, мир!</code>`,s:'',h:`Напиши <code>print("Привет, мир!")</code> — слово print маленькими буквами, текст в кавычках.`,c:o=>o=='Привет, мир!'},
+{t:'Переменные',th:`<p>Переменная — имя, под которым хранится значение. Знак <code>=</code> кладёт значение в переменную, а <code>print()</code> показывает его.</p><pre>city = "Казань"\nprint(city)</pre><p>Имена пишут латиницей и без пробелов: <code>age</code>, <code>user_name</code>.</p>`,k:`Создай переменную <code>age</code> со значением <code>25</code> и выведи её.`,s:'',h:`<code>age = 25</code>, а следующей строкой <code>print(age)</code>.`,c:(o,k)=>o=='25'&&/age\s*=\s*25/.test(k)},
+{t:'Числа и математика',th:`<p>Python считает как калькулятор: <code>+</code> <code>-</code> <code>*</code> <code>/</code>. Ещё три знака: <code>//</code> — целое деление, <code>%</code> — остаток, <code>**</code> — степень.</p><pre>print(7 // 2)  # 3\nprint(7 % 2)   # 1\nprint(2 ** 3)  # 8</pre>`,k:`Выведи, чему равно 2 в степени 10.`,s:'',h:`<code>print(2 ** 10)</code>`,c:(o,k)=>o=='1024'&&(k.includes('**')||k.includes('pow'))},
+{t:'Строки',th:`<p>Строка — текст в кавычках. У строк есть методы: <code>.upper()</code> делает буквы заглавными, <code>.lower()</code> — строчными, а <code>len()</code> считает символы.</p><pre>s = "hi"\nprint(s.upper())  # HI\nprint(len(s))     # 2</pre>`,k:`Выведи переменную <code>word</code> заглавными буквами, а на следующей строке — её длину.`,s:'word = "python"\n',h:`<code>print(word.upper())</code> и <code>print(len(word))</code>`,c:(o,k)=>o=='PYTHON\n6'&&k.includes('.upper()')&&k.includes('len(')},
+{t:'f-строки',th:`<p>Чтобы вставить переменную в текст, поставь <code>f</code> перед кавычками, а переменную возьми в фигурные скобки.</p><pre>name = "Аня"\nprint(f"Привет, {name}!")</pre>`,k:`Выведи <code>Мне 30 лет</code>, подставив переменную <code>age</code> через f-строку.`,s:'age = 30\n',h:`<code>print(f"Мне {age} лет")</code>`,c:(o,k)=>o=='Мне 30 лет'&&/f["']/.test(k)&&k.includes('{')},
+{t:'Ввод данных',th:`<p><code>input()</code> спрашивает данные у пользователя и возвращает строку. Для числа оберни результат в <code>int()</code>.</p><pre>name = input("Имя: ")\nage = int(input("Возраст: "))</pre><p>Когда программа ждёт ввод, печатай прямо в консоли и жми Enter.</p>`,k:`Спроси имя через <code>input()</code> и выведи <code>Привет, имя!</code>. Нажми «Проверить» и введи имя в консоли.`,s:'',h:`<code>name = input("Как тебя зовут? ")</code><br><code>print(f"Привет, {name}!")</code>`,c:(o,k)=>k.includes('input(')&&/Привет, .+!/.test(o)},
+{g:'Условия и циклы',t:'Условия if',th:`<p>Условие выбирает, какой код выполнить. После <code>if</code> и <code>else</code> ставят двоеточие, а код внутри сдвигают на 4 пробела (редактор делает это сам после Enter).</p><pre>if x &gt; 0:\n    print("плюс")\nelse:\n    print("не плюс")</pre><p>Сравнения: <code>==</code> <code>!=</code> <code>&lt;</code> <code>&gt;</code> <code>&lt;=</code> <code>&gt;=</code></p>`,k:`Выведи <code>чётное</code>, если число <code>n</code> чётное, иначе — <code>нечётное</code>.`,s:'n = 7\n',h:`Число чётное, если остаток от деления на 2 равен нулю: <code>n % 2 == 0</code>.`,c:(o,k)=>o=='нечётное'&&k.includes('if')&&k.includes('%')},
+{t:'Цикл for',th:`<p>Цикл повторяет код. <code>range(3)</code> даёт числа 0, 1, 2, а <code>range(1, 4)</code> — 1, 2, 3 (последнее число не входит).</p><pre>for i in range(3):\n    print(i)</pre>`,k:`Выведи числа от 1 до 5, каждое с новой строки.`,s:'',h:`<code>for i in range(1, 6):</code>, а внутри цикла (с отступом) <code>print(i)</code>.`,c:(o,k)=>o=='1\n2\n3\n4\n5'&&k.includes('for')},
+{t:'Цикл while',th:`<p><code>while</code> повторяет код, пока условие истинно. Не забывай менять переменную внутри цикла, иначе он не закончится.</p><pre>n = 3\nwhile n &gt; 0:\n    print(n)\n    n = n - 1</pre>`,k:`Удваивай <code>n</code>, пока оно меньше 100. После цикла выведи <code>n</code>.`,s:'n = 1\n',h:`<code>while n &lt; 100:</code>, внутри <code>n = n * 2</code>, а <code>print(n)</code> — после цикла, без отступа.`,c:(o,k)=>o=='128'&&k.includes('while')},
+{g:'Коллекции',t:'Списки',th:`<p>Список хранит несколько значений в квадратных скобках. Нумерация идёт с нуля. <code>.append(x)</code> добавляет элемент в конец, <code>len()</code> считает элементы, <code>sum()</code> складывает числа.</p><pre>a = [10, 20]\na.append(30)\nprint(a[0])    # 10\nprint(len(a))  # 3</pre>`,k:`Добавь в список <code>nums</code> числа 16 и 23 через <code>append</code> и выведи сумму всех чисел.`,s:'nums = [4, 8, 15]\n',h:`<code>nums.append(16)</code>, <code>nums.append(23)</code>, затем <code>print(sum(nums))</code>`,c:(o,k)=>o=='66'&&k.includes('append')},
+{t:'Словари',th:`<p>Словарь хранит пары «ключ: значение» в фигурных скобках. Читать и менять значения можно через квадратные скобки с ключом.</p><pre>user = {"name": "Аня"}\nuser["age"] = 20\nprint(user["name"])</pre>`,k:`Измени <code>age</code> на 21 и добавь ключ <code>city</code> со значением <code>Москва</code>. Выведи <code>age</code> и <code>city</code> — каждое с новой строки.`,s:'user = {"name": "Аня", "age": 20}\n',h:`<code>user["age"] = 21</code> и <code>user["city"] = "Москва"</code>, потом два <code>print(user[...])</code>.`,c:(o,k)=>o=='21\nМосква'&&k.includes('user[')},
+{g:'Функции и финал',t:'Функции',th:`<p>Функция — именованный кусок кода, который можно вызывать много раз. <code>def</code> объявляет её, <code>return</code> возвращает результат.</p><pre>def double(x):\n    return x * 2\n\nprint(double(4))  # 8</pre>`,k:`Напиши функцию <code>square(x)</code>, которая возвращает квадрат числа, и выведи <code>square(9)</code>.`,s:'',h:`<code>def square(x):</code>, внутри <code>return x * x</code>, потом <code>print(square(9))</code>.`,c:(o,k)=>o=='81'&&k.includes('def square')&&k.includes('return')},
+{t:'Финал: FizzBuzz',th:`<p>Классическая задача объединяет всё, что ты выучил: цикл, условия и остаток от деления. Порядок проверок здесь важен.</p>`,k:`Для чисел от 1 до 15 выведи <code>Fizz</code>, если число делится на 3; <code>Buzz</code> — если на 5; <code>FizzBuzz</code> — если на оба; иначе само число.`,s:'',h:`Сначала проверь деление и на 3, и на 5 (<code>i % 15 == 0</code>), потом отдельно на 3, потом на 5, а иначе <code>print(i)</code>.`,c:(o,k)=>o=='1\n2\nFizz\n4\nBuzz\nFizz\n7\n8\nFizz\nBuzz\n11\nFizz\n13\n14\nFizzBuzz'&&k.includes('for')&&k.includes('%')}
+];
+const X=[
+[{k:`Выведи в одной строке <code>Мне 7 лет</code>, передав в <code>print</code> три значения через запятую: <code>"Мне", 7, "лет"</code>`,h:`<code>print("Мне", 7, "лет")</code> — пробелы между значениями Python ставит сам.`,c:(o,k)=>o=='Мне 7 лет'&&/print\(.+,.+,/.test(k)},
+{f:1,k:`Выведи три любые строки о себе (имя, город, хобби) — каждую отдельным <code>print</code>.`,c:(o,k)=>(k.match(/print\(/g)||[]).length>=3&&o.split('\n').length>=3&&!/мир/.test(o)}],
+[{k:`Код выдаёт ошибку. Найди её и исправь, чтобы вывелось <code>Аня</code>.`,s:'name = "Аня"\nprint(Name)\n',h:`Python различает большие и маленькие буквы: <code>name</code> и <code>Name</code> — разные имена.`,c:(o,k)=>o=='Аня'},
+{f:1,k:`Создай переменные <code>price</code> (цена) и <code>count</code> (количество) — любые числа — и выведи их произведение.`,c:(o,k)=>{const p=k.match(/price\s*=\s*([\d.]+)/),c=k.match(/count\s*=\s*([\d.]+)/);return!!p&&!!c&&+o==p[1]*c[1]}}],
+[{k:`47 конфет делят поровну между 5 детьми. Выведи, сколько получит каждый, а на следующей строке — сколько останется.`,h:`Целое деление — <code>//</code>, остаток — <code>%</code>.`,c:(o,k)=>o=='9\n2'&&k.includes('//')&&k.includes('%')},
+{f:1,k:`Возведи 9 в квадрат и выведи остаток от деления этого числа на 7.`,c:(o,k)=>o=='4'&&k.includes('**')&&k.includes('%')}],
+[{k:`Дана строка <code>s</code>. Выведи её строчными буквами, а на следующей строке — длину.`,s:'s = "Hello, World"\n',h:`<code>s.lower()</code> и <code>len(s)</code>`,c:(o,k)=>o=='hello, world\n12'&&k.includes('.lower()')&&k.includes('len(')},
+{f:1,k:`Придумай слово из 5+ букв, сохрани в переменную, выведи его ЗАГЛАВНЫМИ буквами, а ниже — сколько в нём букв.`,c:(o,k)=>{const[a,b]=o.split('\n');return k.includes('.upper()')&&k.includes('len(')&&a.length>=5&&a==a.toUpperCase()&&+b==a.length}}],
+[{k:`Выведи <code>Аня учится в 7 классе</code> через f-строку, подставив обе переменные.`,s:'name = "Аня"\ngrade = 7\n',h:`<code>print(f"{name} учится в {grade} классе")</code>`,c:(o,k)=>o=='Аня учится в 7 классе'&&/f["']/.test(k)&&k.includes('{')},
+{f:1,k:`Создай переменные <code>item</code> и <code>price</code> (любые) и выведи фразу вида <code>Яблоко стоит 50 руб.</code> через f-строку.`,c:(o,k)=>{const i=k.match(/item\s*=\s*["'](.+?)["']/),p=k.match(/price\s*=\s*(\d+)/);return!!i&&!!p&&/f["']/.test(k)&&o==`${i[1]} стоит ${p[1]} руб.`}}],
+[{k:`Спроси возраст через <code>input()</code>, переведи в число и выведи, сколько будет через 10 лет. Нажми «Проверить» и введи число в консоли.`,h:`<code>age = int(input("Возраст: "))</code>, затем <code>print(age + 10)</code>`,c:(o,k)=>{const n=o.split('\n'),a=(n[0].match(/-?\d+\s*$/)||[])[0],b=(n[n.length-1].match(/-?\d+/g)||[]).pop();return k.includes('int(')&&a!=null&&n.length>1&&+b==+a+10}},
+{f:1,k:`Мини-калькулятор: спроси у пользователя два числа и выведи их сумму. Введи числа в консоли и нажми «Проверить».`,c:(o,k)=>{const n=o.split('\n'),v=m=>+(m.match(/-?\d+\s*$/)||[NaN])[0],b=(n[n.length-1].match(/-?\d+/g)||[]).pop();return(k.match(/input\(/g)||[]).length>=2&&n.length>2&&+b==v(n[0])+v(n[1])}}],
+[{k:`Если <code>age</code> — 18 или больше, выведи <code>взрослый</code>, иначе <code>ребёнок</code>.`,s:'age = 17\n',h:`<code>if age &gt;= 18:</code> … <code>else:</code> …`,c:(o,k)=>o=='ребёнок'&&k.includes('if')&&k.includes('else')},
+{f:1,k:`Создай переменную <code>temp</code> с температурой (любое число). Если она ниже нуля — выведи <code>мороз</code>, иначе — <code>тепло</code>.`,c:(o,k)=>{const t=k.match(/temp\s*=\s*(-?[\d.]+)/);return!!t&&o==(+t[1]<0?'мороз':'тепло')&&k.includes('if')&&k.includes('else')}}],
+[{k:`Выведи первые 5 чисел таблицы умножения на 3 (3, 6, 9, 12, 15) — каждое с новой строки.`,h:`В цикле <code>for i in range(1, 6)</code> печатай <code>i * 3</code>.`,c:(o,k)=>o=='3\n6\n9\n12\n15'&&k.includes('for')},
+{f:1,k:`Посчитай сумму всех чисел от 1 до 100 с помощью цикла и выведи её.`,c:(o,k)=>o=='5050'&&k.includes('for')}],
+[{k:`Пока <code>n</code> больше 0, вычитай из него 3. После цикла выведи <code>n</code>.`,s:'n = 10\n',h:`<code>while n &gt; 0:</code> и внутри <code>n = n - 3</code>`,c:(o,k)=>o=='-2'&&k.includes('while')},
+{f:1,k:`Выведи числа от 10 до 1 по убыванию, каждое с новой строки, используя <code>while</code>.`,c:(o,k)=>o=='10\n9\n8\n7\n6\n5\n4\n3\n2\n1'&&k.includes('while')}],
+[{k:`Добавь в список <code>fruits</code> слово <code>киви</code>. Выведи число элементов, а на следующей строке — третий элемент по индексу.`,s:'fruits = ["яблоко", "банан"]\n',h:`После <code>append</code>: <code>print(len(fruits))</code> и <code>print(fruits[2])</code> — индексы с нуля.`,c:(o,k)=>o=='3\nкиви'&&k.includes('append')&&k.includes('[2]')},
+{f:1,k:`Создай список из 4 любых чисел и выведи его длину, а ниже — сумму.`,c:(o,k)=>{const m=k.match(/=\s*\[([\d\s,.-]+)\]/);if(!m)return false;const a=m[1].split(',').map(Number);return a.length==4&&o==`4\n${a.reduce((x,y)=>x+y,0)}`}}],
+[{k:`Добавь в словарь <code>d</code> ключ <code>киви</code> со значением 90. Выведи цены банана и киви — каждую с новой строки.`,s:'d = {"яблоко": 50, "банан": 70}\n',h:`<code>d["киви"] = 90</code>, потом <code>print(d["банан"])</code> и <code>print(d["киви"])</code>`,c:(o,k)=>o=='70\n90'&&k.includes('d[')},
+{f:1,k:`Создай словарь <code>book</code> с ключами <code>title</code> и <code>year</code> (любые значения). Измени <code>year</code> на 2024 и выведи <code>year</code>.`,c:(o,k)=>/book\s*=\s*\{/.test(k)&&/book\[["']year["']\]\s*=\s*2024/.test(k)&&o=='2024'}],
+[{k:`Допиши функцию <code>hello(name)</code>, чтобы она возвращала <code>Привет, имя!</code>, и выведи <code>hello("Аня")</code>.`,s:'def hello(name):\n    # допиши return\n',h:`<code>return f"Привет, {name}!"</code> с отступом, потом <code>print(hello("Аня"))</code>.`,c:(o,k)=>o=='Привет, Аня!'&&k.includes('return')},
+{f:1,k:`Напиши функцию <code>area(a, b)</code>, возвращающую площадь прямоугольника, и выведи <code>area(4, 5)</code>.`,c:(o,k)=>o=='20'&&k.includes('def area')&&k.includes('return')}],
+[{k:`Выведи числа от 1 до 20, но вместо чисел, которые делятся на 4, выведи <code>ура</code>.`,h:`Условие <code>i % 4 == 0</code> внутри цикла.`,c:(o,k)=>{let e=[];for(let i=1;i<=20;i++)e.push(i%4?i:'ура');return o==e.join('\n')&&k.includes('for')}},
+{f:1,k:`Найди сумму всех чисел от 1 до 50, которые делятся на 7, и выведи её.`,c:(o,k)=>o=='196'&&k.includes('for')&&k.includes('if')&&k.includes('%')}]
+];
+L.forEach((l,i)=>l.st=[{k:l.k,s:l.s,h:l.h,c:l.c},...X[i]]);
+const PRICE=100,DAYS=30,FREE=6,PAY_URL='',DEMO=true,CODES=['PYTHON100'];
+let S={done:[],code:{},cur:0,p:{},hearts:3,day:'',dd:{},ach:{},cl:0,sub:0,ds:''},Q=0,M='l',DI=1,T0=Date.now(),MIS=0,WALL=false,OUT='',ready=false,busy=false;
+try{Object.assign(S,JSON.parse(localStorage.getItem('pyc')||'{}'))}catch(e){}
+const sv=()=>{try{localStorage.setItem('pyc',JSON.stringify(S))}catch(e){}};
+const st=l=>l.s?l.s+'# Продолжай ниже\n':'# Пиши код здесь\n';
+const pr=i=>S.p[i]||0,ok=i=>pr(i)>=L[i].st.length;
+const pills=()=>{if(M=='d')return;const i=S.cur;$('sp').innerHTML=L[i].st.map((t,k)=>`<a href="#" data-q="${k}" class="${k==Q?'on ':''}${k<pr(i)?'dn ':''}${k>pr(i)?'lk':''}">${k+1}</a>`).join('')};
+const fb=(c,t)=>{const last=M=='d'||Q>=L[S.cur].st.length-1;$('fbw').hidden=!t;$('fb').className=c;$('fb').textContent=t;$('nx').textContent=last?'Следующий урок':'Следующее задание';$('nx').hidden=c!='ok'||M=='d'||(last&&S.cur>=L.length-1)};
+function nav(){M=='d'?navD():navL();prog()}
+function navL(){let h='';L.forEach((l,i)=>{const d=ok(i),k=locked(i,0);if(l.g)h+=`<h4>${l.g}</h4>`;h+=`<a href="#" data-i="${i}" class="${i==S.cur?'on ':''}${d?'dn':''}"><b>${d?'✓':k?'🔒':i+1}</b>${l.t}</a>`});$('nav').innerHTML=h}
+function go(i,q){const l=L[i],n=l.st.length,qq=q??Math.min(pr(i),n-1);if(locked(i,qq)){pay();return}S.cur=i;Q=qq;M='l';busy=false;T0=Date.now();MIS=0;const t=l.st[Q],d=Q<pr(i);$('ttl').textContent=`${i+1}. ${l.t}`;$('th').hidden=!!t.f;$('th').innerHTML=l.th;$('th').querySelectorAll('pre').forEach(p=>p.innerHTML=hi(p.textContent));$('tl').textContent=`Задание ${Q+1} из ${n}: ${t.f?'сам, без подсказок и теории':Q?'тот же приём по-другому':'разбор'}`;$('tk').innerHTML=t.k;pills();$('ed').value=S.code[i+'.'+Q]??st(t);render();$('out').textContent='';$('ht').hidden=true;$('ht').innerHTML=t.h||'';$('hb').hidden=!t.h;fb(d?'ok':'',d?'Задание уже пройдено':'');document.body.classList.remove('m');sv();nav();scrollTo(0,0)}
+function ask(p){return new Promise(r=>{const o=$('out'),i=document.createElement('input');i.className='in';o.append(p,i);OUT+=p;i.focus();i.onkeydown=e=>{if(e.key=='Enter'){const v=i.value;i.replaceWith(v+'\n');OUT+=v+'\n';r(v)}}})}
+async function run(chk){
+if(!ready||busy)return;chkDay();if(chk&&S.hearts<1){fb('bad','Сердца закончились. Завтра будет 3 новых — а пока можно запускать код и перечитывать теорию.');return}busy=true;
+const code=$('ed').value,o=$('out');S.code[KEY()]=code;sv();o.textContent='';OUT='';fb('','');
+Sk.configure({output:t=>{OUT+=t;o.append(t)},read:x=>{if(!Sk.builtinFiles||!Sk.builtinFiles.files[x])throw'File not found: '+x;return Sk.builtinFiles.files[x]},__future__:Sk.python3,inputfunTakesPrompt:true,inputfun:ask,execLimit:/input\s*\(/.test(code)?1e9:5000});
+let er='';
+try{await Sk.misceval.asyncToPromise(()=>Sk.importMainWithBody('<stdin>',false,code,true))}catch(e){er=e.toString()}
+if(er){const s=document.createElement('span');s.className='er';s.textContent=(OUT&&!OUT.endsWith('\n')?'\n':'')+(/TimeLimit/.test(er)?'Программа работает слишком долго — похоже на бесконечный цикл.':'Ошибка: '+er);o.append(s)}
+busy=false;
+if(chk){const dm=M=='d',t=CT(),first=dm?!S.dd[DI]:Q>=pr(S.cur);let g=false;try{g=!er&&t.c(OUT.trim(),code)}catch(e){}
+if(g){const h0=S.hearts,secs=(Date.now()-T0)/1e3;let m='Верно! (повторное решение — сердце не даётся)';
+if(first){gain();S.cl=MIS?0:S.cl+1;award('first');if(secs<45)award('fast');if(S.cl>=5)award('clean');if(h0==1)award('last');
+if(dm){S.dd[DI]=1;const st=streak();if(st>=3)award('st3');if(st>=7)award('st7');if(Object.keys(S.dd).length>=DT.length)award('month');m=`Верно! +1 ❤️ Серия: ${st} дн.`}
+else{S.p[S.cur]=Math.max(pr(S.cur),Q+1);const n=L[S.cur].st.length;if(t.f)award('solo');if(ok(S.cur))award('lesson');if(tot()>=10)award('ten');const all=L.every((l,i)=>ok(i));if(all)award('course');m=all?'Все уроки пройдены — ты освоил основы Python! 🏆':Q<n-1?'Верно! +1 ❤️ Дальше — тот же приём, но по-другому.':'Верно! +1 ❤️ Ты справился сам — урок пройден.'}}
+sv();nav();pills();fb('ok',m)}
+else{if(first){loss();S.cl=0;MIS++}sv();fb('bad',(er?'В коде ошибка. ':'Пока не сходится с заданием. ')+(first?(S.hearts?`Минус сердце 💔, осталось ${S.hearts}.`:'Сердца закончились — завтра будет 3 новых.'):'')+(t.h?' Открой подсказку.':''))}}}
+$('nav').onclick=e=>{const a=e.target.closest('a');if(a){e.preventDefault();if(M=='d'){const k=+a.dataset.d;k>dn()?toast(`Откроется через ${k-dn()} дн.`):goD(k)}else go(+a.dataset.i)}};
+$('mb').onclick=()=>document.body.classList.toggle('m');
+$('rn').onclick=()=>run(0);$('ck').onclick=()=>run(1);
+$('hb').onclick=()=>{$('ht').hidden=!$('ht').hidden};
+$('rs').onclick=()=>{$('ed').value=st(CT());render();delete S.code[KEY()];sv()};
+$('nx').onclick=()=>{Q<L[S.cur].st.length-1?go(S.cur,Q+1):go(S.cur+1)};
+$('sp').onclick=e=>{const a=e.target.closest('a');if(a){e.preventDefault();go(S.cur,+a.dataset.q)}};
+const ED=$('ed'),ins=x=>document.execCommand('insertText',false,x),P={'(':')','[':']','{':'}','"':'"',"'":"'"};
+const KW=new Set('and as assert break class continue def del elif else except False finally for from global if import in is lambda None nonlocal not or pass raise return True try while with yield'.split(' ')),BI=new Set('print input int str float len range sum list dict set tuple abs min max round sorted type bool'.split(' '));
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const RX=/(#.*)|([fFrRbB]{0,2}(?:"(?:\\.|[^"\\\n])*"?|'(?:\\.|[^'\\\n])*'?))|(\b\d+(?:\.\d+)?\b)|([A-Za-z_]\w*)|[\s\S]/g;
+const hi=src=>src.replace(RX,(m,c,s,n,w,o)=>{const e=esc(m);return c?`<i class="c">${e}</i>`:s?`<i class="s">${e}</i>`:n?`<i class="n">${e}</i>`:w&&KW.has(w)?`<i class="k">${e}</i>`:w&&src[o+m.length]=='('?`<i class="${BI.has(w)?'b':'f'}">${e}</i>`:e});
+const render=()=>{$('hl').innerHTML=hi(ED.value)+' '};
+ED.addEventListener('input',render);
+ED.onkeydown=e=>{if(e.key=='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();run(0)}else if(e.key=='Tab'&&!e.shiftKey){e.preventDefault();ins('    ')}};
+ED.addEventListener('beforeinput',e=>{const t=ED,v=t.value,s=t.selectionStart,f=t.selectionEnd,n=v[f]||'',p=v[s-1]||'',k=e.data,y=e.inputType;
+if(y=='insertLineBreak'){e.preventDefault();const l=v.slice(0,s).split('\n').pop();ins('\n'+l.match(/^ */)[0]+(l.trimEnd().endsWith(':')?'    ':''))}
+else if(y=='deleteContentBackward'&&s==f&&n&&P[p]==n){e.preventDefault();t.setSelectionRange(s-1,s+1);document.execCommand('delete')}
+else if(y=='insertText'&&k&&k.length==1&&(P[k]||')]}'.includes(k))){
+if(s==f&&n==k&&(')]}'.includes(k)||k==P[k])){e.preventDefault();t.setSelectionRange(s+1,s+1)}
+else if(P[k]&&!(k==P[k]&&s==f&&/[\wа-яё]/i.test(p)&&!/[fFrRbBuU]/.test(p))){e.preventDefault();const m=v.slice(s,f);ins(k+m+P[k]);t.setSelectionRange(s+1,s+1+m.length)}}});
+const DT=[
+{t:'Первая программа',k:`Выведи <code>Привет, Python!</code>`,h:`<code>print("Привет, Python!")</code>`,c:o=>o=='Привет, Python!'},
+{t:'Несколько строк',k:`Выведи три строки: <code>раз</code>, <code>два</code>, <code>три</code>.`,h:`Три отдельных <code>print</code>.`,c:(o,k)=>o=='раз\nдва\nтри'&&(k.match(/print\(/g)||[]).length>=3},
+{t:'Переменные',k:`Создай переменную <code>name</code> со своим именем и выведи её.`,h:`<code>name = "Аня"</code>, затем <code>print(name)</code>`,c:(o,k)=>{const m=k.match(/name\s*=\s*["'](.+?)["']/);return!!m&&o==m[1]}},
+{t:'Математика',k:`Выведи результат выражения <code>15 * 4 - 10</code>.`,h:`<code>print(15 * 4 - 10)</code>`,c:(o,k)=>o=='50'&&k.includes('*')},
+{t:'Остаток от деления',k:`Выведи остаток от деления 100 на 7.`,h:`Знак остатка — <code>%</code>.`,c:(o,k)=>o=='2'&&k.includes('%')},
+{t:'Степень',k:`Выведи 2 в степени 8.`,h:`Знак степени — <code>**</code>.`,c:(o,k)=>o=='256'&&k.includes('**')},
+{t:'Методы строк',k:`Выведи слово <code>привет</code> заглавными буквами.`,h:`<code>"привет".upper()</code>`,c:(o,k)=>o=='ПРИВЕТ'&&k.includes('.upper()')},
+{t:'Длина строки',k:`Выведи длину строки <code>s</code>.`,s:'s = "python"\n',h:`<code>len(s)</code>`,c:(o,k)=>o=='6'&&k.includes('len(')},
+{t:'f-строки',k:`Выведи <code>3 + 4 = 7</code> через f-строку, используя <code>a</code> и <code>b</code>.`,s:'a = 3\nb = 4\n',h:`<code>f"{a} + {b} = {a + b}"</code>`,c:(o,k)=>o=='3 + 4 = 7'&&/f["']/.test(k)&&k.includes('{')},
+{t:'Ввод',k:`Спроси имя через <code>input()</code> и выведи <code>Привет, имя!</code>. Нажми «Проверить» и введи имя в консоли.`,h:`<code>n = input("Имя: ")</code>`,c:(o,k)=>k.includes('input(')&&/Привет, .+!/.test(o)},
+{t:'Ввод чисел',k:`Спроси число и выведи его квадрат. Введи число в консоли и нажми «Проверить».`,h:`<code>n = int(input("Число: "))</code>`,c:(o,k)=>{const n=o.split('\n'),a=+(n[0].match(/-?\d+\s*$/)||[NaN])[0],b=+(n[n.length-1].match(/-?\d+/g)||[NaN]).pop();return n.length>1&&k.includes('int(')&&a*a==b}},
+{t:'Условие if',k:`Выведи <code>чётное</code> или <code>нечётное</code> для числа <code>n</code>.`,s:'n = 12\n',h:`<code>n % 2 == 0</code>`,c:(o,k)=>o=='чётное'&&k.includes('if')&&k.includes('%')},
+{t:'Условие elif',k:`Выведи <code>положительное</code>, <code>отрицательное</code> или <code>ноль</code> для <code>x</code>.`,s:'x = -3\n',h:`<code>if</code> … <code>elif</code> … <code>else</code>`,c:(o,k)=>o=='отрицательное'&&k.includes('elif')},
+{t:'Большее из двух',k:`Выведи большее из чисел <code>a</code> и <code>b</code>.`,s:'a = 8\nb = 5\n',h:`<code>if a &gt; b:</code>`,c:(o,k)=>o=='8'&&k.includes('if')},
+{t:'Цикл for',k:`Выведи квадраты чисел от 1 до 5, каждый с новой строки.`,h:`<code>for i in range(1, 6):</code> и <code>print(i * i)</code>`,c:(o,k)=>o=='1\n4\n9\n16\n25'&&k.includes('for')},
+{t:'Сумма в цикле',k:`Посчитай циклом сумму чисел от 1 до 10 и выведи её.`,h:`Заведи <code>t = 0</code> и прибавляй <code>i</code>.`,c:(o,k)=>o=='55'&&k.includes('for')},
+{t:'Повтор в цикле',k:`Выведи слово <code>Python</code> три раза, каждое с новой строки, циклом <code>for</code>.`,h:`<code>for i in range(3):</code>`,c:(o,k)=>o=='Python\nPython\nPython'&&k.includes('for')},
+{t:'Цикл while',k:`Выведи числа 3, 2, 1 по убыванию через <code>while</code>.`,h:`<code>n = 3</code>, пока <code>n &gt; 0</code> печатай и уменьшай.`,c:(o,k)=>o=='3\n2\n1'&&k.includes('while')},
+{t:'Удвоение',k:`Удваивай <code>n</code>, пока оно меньше 50. Выведи <code>n</code>.`,s:'n = 3\n',h:`<code>n = n * 2</code> внутри <code>while</code>`,c:(o,k)=>o=='96'&&k.includes('while')},
+{t:'Списки',k:`Создай список из чисел 5, 3, 9 и выведи его длину.`,h:`<code>a = [5, 3, 9]</code> и <code>len(a)</code>`,c:(o,k)=>o=='3'&&/\[[^\]]*\]/.test(k)&&k.includes('len(')},
+{t:'Добавление в список',k:`Добавь в <code>nums</code> число 10 и выведи сумму.`,s:'nums = [4, 7, 1]\n',h:`<code>nums.append(10)</code>`,c:(o,k)=>o=='22'&&k.includes('append')},
+{t:'Перебор списка',k:`Выведи каждое имя из списка с новой строки циклом.`,s:'names = ["Аня", "Борис", "Вера"]\n',h:`<code>for n in names:</code>`,c:(o,k)=>o=='Аня\nБорис\nВера'&&k.includes('for')},
+{t:'Словарь',k:`Создай словарь <code>car</code> с ключами <code>brand</code> и <code>year</code> и выведи значение <code>brand</code>.`,h:`<code>car = {"brand": "Audi", "year": 2020}</code>`,c:(o,k)=>{const m=k.match(/["']brand["']\s*:\s*["'](.+?)["']/);return/car\s*=\s*\{/.test(k)&&!!m&&o==m[1]&&/car\[["']brand["']\]/.test(k)}},
+{t:'Словарь: добавление',k:`Добавь в <code>d</code> ключ <code>c</code> со значением 3 и выведи <code>d["c"]</code>.`,s:'d = {"a": 1, "b": 2}\n',h:`<code>d["c"] = 3</code>`,c:(o,k)=>o=='3'&&/d\[["']c["']\]\s*=\s*3/.test(k)},
+{t:'Функции',k:`Напиши функцию <code>double(x)</code>, удваивающую число, и выведи <code>double(21)</code>.`,h:`<code>def double(x):</code> + <code>return</code>`,c:(o,k)=>o=='42'&&k.includes('def double')&&k.includes('return')},
+{t:'Функция с текстом',k:`Напиши функцию <code>greet(name)</code>, возвращающую <code>Привет, имя!</code>, и выведи <code>greet("Мир")</code>.`,h:`<code>return f"Привет, {name}!"</code>`,c:(o,k)=>o=='Привет, Мир!'&&k.includes('def greet')&&k.includes('return')},
+{t:'Функция-проверка',k:`Напиши функцию <code>is_even(n)</code>, возвращающую <code>True</code> для чётных, и выведи <code>is_even(10)</code>.`,h:`<code>return n % 2 == 0</code>`,c:(o,k)=>o=='True'&&k.includes('def is_even')&&k.includes('return')},
+{t:'Цикл + условие',k:`Выведи числа от 1 до 15, но вместо кратных 5 выведи <code>Buzz</code>.`,h:`<code>if i % 5 == 0:</code> внутри цикла`,c:(o,k)=>{let e=[];for(let i=1;i<=15;i++)e.push(i%5?i:'Buzz');return o==e.join('\n')&&k.includes('for')&&k.includes('%')}},
+{t:'Подсчёт',k:`Посчитай, сколько чисел в <code>nums</code> больше 7, и выведи количество.`,s:'nums = [3, 8, 12, 5, 20]\n',h:`Счётчик <code>c = 0</code>, цикл и <code>if x &gt; 7:</code>`,c:(o,k)=>o=='3'&&k.includes('for')&&k.includes('if')},
+{t:'Финал месяца',k:`Напиши функцию <code>total(lst)</code>, которая возвращает сумму чётных чисел списка, и выведи <code>total([1, 2, 3, 4, 10])</code>.`,h:`Внутри функции: цикл, <code>if x % 2 == 0</code> и накопление суммы.`,c:(o,k)=>o=='16'&&k.includes('def total')&&k.includes('return')&&k.includes('for')&&k.includes('if')}
+];
+const AC=[['first','🌱','Первый шаг','Реши первое задание'],['fast','⚡','Молния','Реши задание быстрее чем за 45 секунд'],['clean','🎯','Без промаха','Реши 5 заданий подряд с первой попытки'],['lesson','📘','Урок позади','Пройди все три задания любого урока'],['solo','🧠','Своя голова','Реши финальное задание без подсказок'],['last','🛟','На последнем сердце','Реши задание, когда остаётся 1 сердце'],['ten','🔟','Десятка','Реши 10 заданий'],['st3','🔥','Три дня подряд','Решай задачу дня 3 дня подряд'],['st7','🏅','Неделя без пропусков','Решай задачу дня 7 дней подряд'],['course','🏆','Курс пройден','Пройди все 13 уроков'],['month','📅','Месяц с Python','Реши все 30 заданий программы'],['sub','💎','Поддержал курс','Оформи подписку']];
+const CT=()=>M=='d'?DT[DI-1]:L[S.cur].st[Q],KEY=()=>M=='d'?'d'+DI:S.cur+'.'+Q;
+const tot=()=>L.reduce((a,l,i)=>a+Math.min(pr(i),l.st.length),0);
+const prog=()=>{const T=L.reduce((a,l)=>a+l.st.length,0),D=tot();$('pc').textContent=`${D} из ${T} заданий`;$('bar').style.width=D/T*100+'%'};
+const subOn=()=>S.sub>Date.now(),gi=(i,j)=>L.slice(0,i).reduce((a,l)=>a+l.st.length,0)+j,locked=(i,j)=>!subOn()&&gi(i,j)>=FREE;
+const today=()=>new Date().toLocaleDateString('sv');
+const dn=()=>{if(!S.ds){S.ds=today();sv()}return Math.floor((new Date(today())-new Date(S.ds))/864e5)+1};
+const streak=()=>{let k=Math.min(dn(),DT.length),n=0;if(!S.dd[k])k--;while(k>=1&&S.dd[k]){n++;k--}return n};
+const rh=b=>{$('hr').innerHTML=[0,1,2].map(i=>i<S.hearts?'❤️':`<span class="${b&&i==S.hearts?'br':''}">💔</span>`).join('');$('hr').title=`Сердца: ${S.hearts} из 3`};
+const chkDay=()=>{if(S.day!=today()){S.day=today();S.hearts=3;sv();rh()}};
+const gain=()=>{S.hearts=Math.min(3,S.hearts+1);rh()},loss=()=>{S.hearts=Math.max(0,S.hearts-1);rh(1)};
+const toast=t=>{const e=$('ts');e.textContent=t;e.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>e.hidden=true,3500)};
+const award=id=>{if(!S.ach[id]){S.ach[id]=Date.now();toast('🏆 Достижение: '+AC.find(a=>a[0]==id)[2])}};
+function navD(){const t=dn();let h=`<h4>Серия: ${streak()} дн. 🔥 Решено ${Object.keys(S.dd).length} из ${DT.length}</h4>`;DT.forEach((x,i)=>{const k=i+1,d=!!S.dd[k];if(i%7==0)h+=`<h4>Неделя ${i/7+1}</h4>`;h+=`<a href="#" data-d="${k}" class="${k==DI?'on ':''}${d?'dn':''}"><b>${d?'✓':k>t?'🔒':k>FREE&&!subOn()?'💎':k}</b>День ${k}. ${x.t}</a>`});$('nav').innerHTML=h}
+function goD(k){if(k>FREE&&!subOn()){pay();return}DI=k;M='d';busy=false;T0=Date.now();MIS=0;const t=DT[k-1],d=!!S.dd[k];$('ttl').textContent=`День ${k} из ${DT.length}: ${DT[k-1].t}`;$('th').hidden=true;$('tl').textContent='Ежедневная задача';$('tk').innerHTML=t.k;$('sp').innerHTML='';$('ed').value=S.code['d'+k]??st(t);render();$('out').textContent='';$('ht').hidden=true;$('ht').innerHTML=t.h||'';$('hb').hidden=!t.h;fb(d?'ok':'',d?'Задача дня уже решена':'');document.body.classList.remove('m');sv();nav();scrollTo(0,0)}
+function ra(){const n=Object.keys(S.ach).length;$('pa').innerHTML=`<div class="pgw"><h1>Достижения</h1><p>Открыто ${n} из ${AC.length}</p><div class="ag">${AC.map(a=>`<div class="ac${S.ach[a[0]]?'':' lk'}"><span class="ic">${a[1]}</span><div><b>${a[2]}</b><div>${a[3]}</div>${S.ach[a[0]]?`<small>${new Date(S.ach[a[0]]).toLocaleDateString('ru')}</small>`:''}</div></div>`).join('')}</div></div>`}
+function rsub(){const on=subOn();$('ps').innerHTML=`<div class="pgw"><h1>Подписка на курс</h1><p>${on?'Подписка активна до '+new Date(S.sub).toLocaleDateString('ru')+'.':WALL?'Бесплатные задания закончились. Оформи подписку, чтобы продолжить.':`Первые ${FREE} заданий бесплатны — пройдено ${Math.min(tot(),FREE)} из ${FREE}. Дальше нужна подписка.`}</p><div class="pr"><b>${PRICE} ₽</b><span>за ${DAYS} дней доступа</span></div><ul><li>Программа на 30 дней: каждый день — новое задание</li><li>13 уроков с теорией и 39 заданиями</li><li>В каждом уроке финальное задание без подсказок</li><li>Прогресс, сердца и достижения сохраняются</li></ul>${on?'':`<button id="buy" class="p">Купить за ${PRICE} ₽</button><p class="mu">${PAY_URL?'':'Демо-режим: оплата не подключена, подписка включится бесплатно.'}</p><div class="cd"><input id="cd" placeholder="Код активации" autocomplete="off"><button id="ac2" class="p">Активировать</button></div>`}</div>`}
+const act=()=>{S.sub=Date.now()+DAYS*864e5;award('sub');sv();rsub();nav();toast('Подписка активна')};
+$('ps').onclick=e=>{if(e.target.id=='buy'){PAY_URL?open(PAY_URL,'_blank'):DEMO?act():toast('Оплата недоступна')}else if(e.target.id=='ac2'){CODES.includes($('cd').value.trim().toUpperCase())?act():toast('Неверный код')}};
+function show(v){document.body.classList.remove('m');$('tabs').querySelectorAll('a').forEach(a=>a.classList.toggle('on',a.dataset.v==v));document.querySelector('.w').hidden=v=='a'||v=='s';$('pa').hidden=v!='a';$('ps').hidden=v!='s';
+if(v=='a')ra();else if(v=='s')rsub();else if(v=='d'){const t=Math.min(dn(),DT.length);let k=t;for(let j=1;j<=t;j++)if(!S.dd[j]){k=j;break}goD(k>FREE&&!subOn()?FREE:k)}else go(S.cur,Q)}
+const pay=()=>{WALL=true;show('s')};
+$('tabs').onclick=e=>{const a=e.target.closest('a');if(a){e.preventDefault();WALL=false;show(a.dataset.v)}};
+chkDay();rh();if(locked(S.cur,0))S.cur=0;
+go(Math.min(S.cur||0,L.length-1));
+const ld=u=>new Promise((res,rej)=>{let i=0;(function n(){if(i>=u.length)return rej();const s=document.createElement('script');s.src=u[i++];s.onload=res;s.onerror=n;document.head.append(s)})()});
+const C='https://cdnjs.cloudflare.com/ajax/libs/skulpt/1.2.0/',J='https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/';
+ld([C+'skulpt.min.js',J+'skulpt.min.js']).then(()=>ld([C+'skulpt-stdlib.js',J+'skulpt-stdlib.js'])).then(()=>{ready=true;$('rn').disabled=$('ck').disabled=false}).catch(()=>{$('out').textContent='Не удалось загрузить интерпретатор Python. Проверь интернет и обнови страницу.'});
+</script>
+</body>
+</html>
